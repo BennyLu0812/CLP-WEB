@@ -1,0 +1,12 @@
+{
+  "name": "clp-war-ear",
+  "version": "1.0.0",
+  "description": "pom.xml 中，只需要将web工程依赖到pom.xml中，如vss-sys-web",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

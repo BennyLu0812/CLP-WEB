@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<queries>
+
+    <geCLPApiHistoryPage type="sql">
+        <![CDATA[
+            select
+            API_HISTORY_ID  "apiHistoryId",
+            API_NAME "apiName",
+            API_REQUEST_PARAMS "apiRequestParams",
+            API_RESPONSE_VALUES "apiResponseValues",
+            API_RESPONSE_STATUS "apiResponseStatus",
+            API_MEDIA_TYPE "apiMediaType",
+            API_FILE_NAME "apiFileName",
+            API_FILE_PATH "apiFilePath",
+            CREATE_USER "createUser",
+            CREATE_DATE "createDate",
+            LAST_UPD_USER "lastUpdUser",
+            LAST_UPD_DATE "lastUpdDate",
+            ROW_NUMBER() over (order by CREATE_DATE desc) as "num"
+
+            from CLP_API_HISTORY with (nolock)
+            where 1=1
+            <#if createUser?? && createUser !!=''>
+	            and CREATE_USER =:createUser
+            </#if>
+            <#if apiName?? && apiName !!=''>
+	            and API_NAME=:apiName
+            </#if>
+            <#if createDateFrom?? && createDateFrom !!='' &&  createDateTo??  && createDateTo!!=''>
+                and CREATE_DATE between :createDateFrom and :createDateTo
+            <#else>
+                <#if createDateFrom?? && createDateFrom !!=''>
+	                and CREATE_DATE >= :createDateFrom
+                </#if>
+
+                <#if createDateTo?? && createDateTo !!=''>
+	                and CREATE_DATE <= :createDateTo
+                </#if>
+            </#if>
+
+        ]]>
+    </geCLPApiHistoryPage>
+
+
+    <getSystemParamSelectPage type="sql">
+        <![CDATA[
+            SELECT
+                VALUE "id",
+                VALUE "text"
+            FROM  dbo.sys_params_split('DATE_CENTRE_ID', ',')
+            where 1=1
+            <#if keyword?? && keyword!!=''>
+                and UPPER(VALUE)   LIKE UPPER(:keyword)
+            </#if>
+        ]]>
+    </getSystemParamSelectPage>
+
+</queries>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="fragments/head">head</div>
+    <title>renewCert</title>
+    <style>
+        @media (min-width: 992px) {
+            .col-md-3 {
+                width: 20%;
+            }
+        }
+    </style>
+</head>
+<body >
+<div class="container-fluid padding-bottom-50" id="renewCertApp">
+
+    <div class="container-fluid">
+        <div th:replace="fragments/layout :: content_header(|#{api.trigger.renewCert.header.title}|, 'CLP-API-008')">
+            SCREEN-ID
+        </div>
+    </div>
+
+    <form id="renewCertForm" class="form-horizontal bv-form">
+        <fieldset>
+
+            <input type="hidden" name="apiName" v-model="apiRequestDTO.apiName"   class="form-control" />
+
+            <div class="form-group">
+                <label class="control-label col-sm-2 control-label-required"  for="dataCentreId">
+                    <span th:text="#{api.trigger.requestParams.label.dataCentreId}"></span></label>
+                <div class="col-sm-5">
+
+                    <v-select lazy="true" v-model="dataCentreId" name="dataCentreId" ref="dataCentreIdSelect"
+                              th:placeholder="#{global.pleaseSelect}" :url="dataCentreIdUrl" :options="dataCentreIdOptions"></v-select>
+                    <!--<input  name="dataCentreId"
+                            v-model="dataCentreId" th:placeholder="#{api.trigger.requestParams.dataCentreId}"
+                            type="text" class="form-control"  style="width: 100%" ref = "dataCentreId"
+                    />-->
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2 control-label-required">
+                    <span th:text="#{api.trigger.requestParams.label.x509CertFile}"></span></label>
+                <div class="col-sm-5"><!--參考LIC-117-->
+                    <input id="uploadCer" name="uploadCer" type="file" class="form-control" accept=".cer" multiple="multiple"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2"></label>
+                <div class="col-sm-5">
+                    <button type="button" class="btn btn-primary" draw-confirm @click="doSubmit" >
+                        <span th:text="#{global.submit}">提交</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2"><span th:text="#{api.trigger.responseResult}"></span></label>
+                <div class="col-sm-5">
+                    <pre name="apiResponseValues" disabled="disabled" style="height: 280px" ></pre >
+                </div>
+            </div>
+        </fieldset>
+    </form>
+
+    <!-- 注入系統默認javaScript腳本 -->
+    <div th:replace="fragments/script">Script JS</div>
+    <!-- 自己系統的腳本請在下面引入 -->
+    <script type="text/javascript" th:inline="javascript">
+
+    </script>
+    <script type="text/javascript" src="static/js/triggerApi/renewCert-7f7b2a3a0b.js" th:src="@{/static/js/triggerApi/renewCert-7f7b2a3a0b.js}"></script>
+</div>
+</body>
+</html>
