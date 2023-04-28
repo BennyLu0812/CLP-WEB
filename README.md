@@ -1,3 +1,2 @@
-# CLP
 
-cloud logging portal
+
